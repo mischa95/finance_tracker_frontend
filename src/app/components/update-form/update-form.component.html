@@ -1,0 +1,38 @@
+<div class='row justify-content-center'>
+    <div class='col-6'>
+      <h1>Update Expense</h1>
+      <form #forn="ngForm" ngNativeValidate>
+        <!-- <form #forn="ngForm" (ngSubmit)="onSubmit(form)"> -->
+        <div class='form-group'>
+          <label for="description">Description</label>
+          <input id="description" name="description" class='form-control' [(ngModel)]="expense.description" autocomplete="off"
+                type="text" required>
+        </div>
+        <div class='form-group'>
+          <label for="amount">Cost</label>
+          <input id="amount" name="amount" class='form-control' [(ngModel)]="expense.price"
+                type="number" min="0">
+        </div>
+        <div class='form-group'>
+          <label for="currency">Currency</label>
+          <input id="currency" name="currency" class='form-control' [(ngModel)]="expense.currency" autocomplete="off"
+                type="text" required>
+        </div>
+        <div class='form-group'>
+          <label for="category">Category</label>
+          <select id="category" name="category" class='form-control' [(ngModel)]="expense.category" required>
+            <option *ngFor="let category of categories">
+              {{ category.categoryName }}
+            </option>
+          </select>
+        </div>
+        <div class='form-group'>
+          <label for="date">Choose a date</label>
+          <input id="date" name="date" class='form-control' [(ngModel)]="expense.date" 
+                type="date" required>
+        </div>
+        <button>Close</button>
+        <button style="margin-left: 8px;" type="submit" (click)="onSubmit()" >Submit</button>
+      </form>
+    </div>
+  </div>
