@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Expense } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { Router } from '@angular/router';
-// import { MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog'
-import { UpdateFormComponent } from '../update-form/update-form.component';
-import { Observable } from 'rxjs';
-import { Dialog } from '@angular/cdk/dialog';
 import { ExpenseFormComponent } from '../expense-form/expense-form.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
@@ -37,7 +33,7 @@ export class ExpenseListComponent implements OnInit {
     })
   }
 
-  openUpdateExpenseModal() {
+  openUpdateExpenseModal(expense: Expense) {
     // this.dialog.open(UpdateFormComponent, {
     //   width: "30%"
     // });
@@ -46,7 +42,8 @@ export class ExpenseListComponent implements OnInit {
   openCreateExpenseModal() {
     console.log('open create modal');
     const modalRef = this.modalService.show(ExpenseFormComponent, {
-      class: 'modal-md'
+      class: 'modal-md',
+      animated: false
       // initialState: {
       //   testSheetId: row.testSheetId
       // }
@@ -57,13 +54,6 @@ export class ExpenseListComponent implements OnInit {
       this.listExpenses();
     });
   }
-
-
-
-  // sumAllExpenses() {
-  //   this.expenseService.sumAllExpenses()
-  // }
-
 
   updateExpense(id: number) {
     this.router.navigate(['update-expense', id]);

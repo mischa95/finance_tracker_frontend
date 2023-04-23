@@ -1,12 +1,10 @@
-import { Component, InjectionToken, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import { Expense } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators, FormBuilder, NgForm } from '@angular/forms';
-import { Location } from '@angular/common';
-import { Observable, Subject, first } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -16,11 +14,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ExpenseFormComponent implements OnInit {
 
-  constructor(private categoryService: CategoryService, private expenseService: ExpenseService,
-    private bsModalRef: BsModalRef) { }
+  constructor(
+    private categoryService: CategoryService,
+    private expenseService: ExpenseService,
+    public bsModalRef: BsModalRef
+  ) { }
 
   categories: Category[] = [];
-  expense: Expense = new Expense();
   expenseForm: FormGroup;
   expenseCreated: Subject<any> = new Subject();
 
@@ -35,7 +35,6 @@ export class ExpenseFormComponent implements OnInit {
       // category: new FormControl('', Validators.required),
       // date: new FormControl('', Validators.required),
     }, {});
-    console.log('modal open');
   }
 
 
@@ -45,20 +44,21 @@ export class ExpenseFormComponent implements OnInit {
     )
   }
 
-  // onSubmit(){
-  //   console.log(this.expenseForm.value);
-  //   this.saveExpense();
-  // }
-
   onSubmit() {
     console.log('in onSubmit: ', this.expenseForm.valid);
     if (this.expenseForm.valid) {
       this.saveExpense();
+    } else {
+      // show alert
     }
   }
 
   saveExpense() {
-    this.expenseService.addExpense(this.expense).subscribe({
+    const newExpense = {
+      description: this.expenseForm.get('description')?.value
+    } as Expense;
+
+    this.expenseService.addExpense(newExpense).subscribe({
       next: data => {
         console.log(data);
         this.expenseCreated.next({});

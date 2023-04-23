@@ -9,7 +9,7 @@ import { setTheme } from 'ngx-bootstrap/utils';
 export class AppComponent implements OnInit{
 
   constructor(){
-    setTheme('bs4');
+    setTheme('bs5');
   }
   
   ngOnInit(): void{}
