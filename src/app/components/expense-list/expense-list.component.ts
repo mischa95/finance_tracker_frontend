@@ -3,6 +3,7 @@ import { Expense } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { Router } from '@angular/router';
 import { ExpenseFormComponent } from '../expense-form/expense-form.component';
+import { UpdateFormComponent } from '../update-form/update-form.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 
@@ -13,6 +14,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 })
 export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = [];
+  expenseId:number
 
   constructor(private expenseService: ExpenseService, private router: Router, private modalService: BsModalService) { }
 
@@ -33,10 +35,22 @@ export class ExpenseListComponent implements OnInit {
     })
   }
 
-  openUpdateExpenseModal(expense: Expense) {
-    // this.dialog.open(UpdateFormComponent, {
-    //   width: "30%"
-    // });
+  openUpdateExpenseModal(expenseId: number) {
+    console.log('open update modal');
+    
+    const modalRef = this.modalService.show(UpdateFormComponent,  {
+      class: 'modal-md',
+      animated: false,
+      initialState: {
+        expenseUpdateId: expenseId
+      }
+
+    });
+
+    modalRef?.content?.updated.subscribe(() => {
+      this.listExpenses();
+      
+    });
   }
 
   openCreateExpenseModal() {
@@ -44,18 +58,10 @@ export class ExpenseListComponent implements OnInit {
     const modalRef = this.modalService.show(ExpenseFormComponent, {
       class: 'modal-md',
       animated: false
-      // initialState: {
-      //   testSheetId: row.testSheetId
-      // }
-
     });
 
     modalRef?.content?.expenseCreated.subscribe(() => {
       this.listExpenses();
     });
-  }
-
-  updateExpense(id: number) {
-    this.router.navigate(['update-expense', id]);
   }
 }

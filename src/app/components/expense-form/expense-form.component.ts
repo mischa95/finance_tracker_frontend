@@ -24,16 +24,19 @@ export class ExpenseFormComponent implements OnInit {
   expenseForm: FormGroup;
   expenseCreated: Subject<any> = new Subject();
 
+  categoryId:number;
+  category:Category; 
+
   ngOnInit(): void {
 
     this.listCategories();
 
     this.expenseForm = new FormGroup({
       description: new FormControl('', Validators.required),
-      // price: new FormControl('', Validators.required),
-      // currency: new FormControl('', Validators.required),
-      // category: new FormControl('', Validators.required),
-      // date: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      currency: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.nullValidator),
+      date: new FormControl('', Validators.required)
     }, {});
   }
 
@@ -41,6 +44,14 @@ export class ExpenseFormComponent implements OnInit {
   listCategories() {
     this.categoryService.getCategories().subscribe(
       data => this.categories = data
+    )
+  }
+
+  changeCategory(e:any){
+    this.categoryId=e.target.value;
+
+    this.categoryService.getCategoryById(this.categoryId).subscribe(
+      (data: any) => this.category = data
     )
   }
 
@@ -55,7 +66,11 @@ export class ExpenseFormComponent implements OnInit {
 
   saveExpense() {
     const newExpense = {
-      description: this.expenseForm.get('description')?.value
+      description: this.expenseForm.get('description')?.value,
+      price: this.expenseForm.get('price')?.value,
+      currency: this.expenseForm.get('currency')?.value,
+      category: this.category,
+      date: this.expenseForm.get('date')?.value,
     } as Expense;
 
     this.expenseService.addExpense(newExpense).subscribe({

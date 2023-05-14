@@ -12,29 +12,29 @@
         type="text" required>
     </div>
 
-    <!-- <div class='form-group'>
-      <label for="amount">Cost</label>
-      <input id="amount" name="amount" class='form-control' [(ngModel)]="expense.price" type="number" min="0">
+    <div class='form-group'>
+      <label for="price">Price</label>
+      <input id="price" name="price" formControlName="price" class='form-control'  type="number" min="0">
     </div>
+    
     <div class='form-group'>
       <label for="currency">Currency</label>
-      <input id="currency" name="currency" class='form-control' [(ngModel)]="expense.currency" autocomplete="off"
+      <input id="currency" name="currency" formControlName="currency" class='form-control' autocomplete="off"
         type="text" required>
     </div>
     <div class='form-group'>
       <label for="category">Category</label>
-      <select id="category" name="category" class='form-control' [(ngModel)]="expense.category" required>
-        <option *ngFor="let category of categories">
+      <select id="category" name="category" (change)="changeCategory($event)" formControlName="category" class='form-control'>
+        <option [value]="category.id" *ngFor="let category of categories">
           {{ category.categoryName }}
         </option>
       </select>
     </div>
     <div class='form-group'>
       <label for="date">Choose a date</label>
-      <input id="date" name="date" class='form-control' [(ngModel)]="expense.date" type="date" required>
-    </div> -->
+      <input id="date" name="date" formControlName="date" class='form-control'  type ="date" required>
+    </div> 
 
-    <button>Close</button>
     <button style="margin-left: 8px;" type="submit">Submit</button>
   </form>
 </div>

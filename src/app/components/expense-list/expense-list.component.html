@@ -1,5 +1,9 @@
+<div class="text-center">
+    <h1>Finance Tracker</h1>
+  </div>
 <div class="container">
-    <button (click)="openCreateExpenseModal()">Add Expense</button>
+    
+    <button class="addButton" (click)="openCreateExpenseModal()">Add Expense</button>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -17,7 +21,7 @@
                 <td>{{expense.category?.categoryName}}</td>
                 <td>{{expense.date}}</td>
                 <td>
-                    <button (click)="openUpdateExpenseModal(expense)">
+                    <button (click)="openUpdateExpenseModal(expense.id)">
                         <i class="fas fa-edit"></i>
                     </button>
                     <button (click)="deleteExpense(expense.id)" style="margin-left: 10px">

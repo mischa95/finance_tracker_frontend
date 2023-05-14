@@ -1,12 +1,11 @@
-import { Component, InjectionToken, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import { Expense } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {FormControl, FormGroup, Validators, FormBuilder, NgForm} from '@angular/forms';
-import { Location } from '@angular/common';
-import { Observable, Subscription, first } from 'rxjs';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Subject} from 'rxjs';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-update-form',
@@ -15,45 +14,31 @@ import { Observable, Subscription, first } from 'rxjs';
 })
 export class UpdateFormComponent {
   categories: Category[] = [];
-  expense: Expense;
-  formControl = new FormControl('', [Validators.required]);
-  expenseForm: FormGroup;
-  errorMessage: string;
-
-  id: any |null
-  private sub: Subscription;
+  categoryId:number;
+  category:Category; 
   
-
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private _categoryService: CategoryService, private expenseService: ExpenseService,
-    private router: Router) { }
+  expense: Expense;
+  expenseForm: FormGroup;
+  expenseUpdateId:number;
+  updated: Subject<any> = new Subject();
+  
+  errorMessage: string;
+  constructor(public bsModalRef: BsModalRef, private categoryService: CategoryService, private expenseService: ExpenseService
+    ) { }
 
     ngOnInit(): void {
-      
       this.listCategories();
-        this.expenseForm = this.formBuilder.group({
-            description: ['', Validators.required],
-            price: ['', Validators.required],
-            currency: ['', Validators.required],
-            category: ['', [Validators.required]],
-            date: ['', Validators.required]
-        }, {});
+      
+      console.log(this.expenseUpdateId)
+      this.getExpense(this.expenseUpdateId);
 
-        // this.sub = this.route.paramMap.subscribe(
-        //   params => {
-        //     const id = +params.get('id');
-        //     this.getExpense(id);
-        //   }
-        // )
-
-        // let expenseId= this.route.snapshot.paramMap.get('id');
-        // console.warn(expenseId);
-        // expenseId && this.getExpense(expenseId).subscribe((data) =>{
-        //   console.warn(data)
-        // })
-        // this.route.paramMap.subscribe(params => {
-        //   this.id= params.get('id');
-        //   this.getExpense(this.id);
-        // });
+      this.expenseForm = new FormGroup({
+        description: new FormControl('', Validators.required),
+        price: new FormControl('', Validators.required),
+        currency: new FormControl('', Validators.required),
+        category: new FormControl('', Validators.nullValidator),
+        date: new FormControl('', Validators.required)
+      }, {});
     }
 
     getExpense(id: any | null): void {
@@ -70,48 +55,56 @@ export class UpdateFormComponent {
       }
       this.expense = expense;
 
+      console.log(this.expense.category?.categoryName)
       this.expenseForm.patchValue({
         description: this.expense.description,
         price: this.expense.price,
         currency: this.expense.currency,
-        category: this.expense.category.categoryName,
+        category: this.expense.category?.id,
         date: this.expense.date
       });
-      //this.expenseForm.setControl('tags', this.formBuilder.array(this.expense.id  || []));
     }
 
   listCategories() {
-    this._categoryService.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       data => this.categories = data
     )
   }
 
-  onSubmit(){
-    console.log(this.expense);
-    this.saveExpense();
-    this.close();
+  changeCategory(e:any){
+    this.categoryId=e.target.value;
+
+    this.categoryService.getCategoryById(this.categoryId).subscribe(
+      (data: any) => this.category = data
+    )
   }
 
-  // onSubmit(form: NgForm){
-  //   console.log('in onSubmit: ', form.valid);
-  //   this.saveExpense();
-  //   this.close();
-  // }
-
-  saveExpense(){
-    this.expenseService.updateExpense(this.id, this.expense).subscribe( data =>{
-      console.log(data);
-      this.goToExpenseList();
-    },
-    error => console.log(error));
+  onSubmit() {
+    console.log('in onSubmit: ', this.expenseForm.valid);
+    if (this.expenseForm.valid) {
+      this.saveExpense();
+    } else {
+      // show alert
+    }
   }
 
-  goToExpenseList(){
-    this.router.navigate(['/Expense']);
-  }
+  saveExpense() {
+    const updatedExpense = {
+      description: this.expenseForm.get('description')?.value,
+      price: this.expenseForm.get('price')?.value,
+      currency: this.expenseForm.get('currency')?.value,
+      category: this.category,
+      date: this.expenseForm.get('date')?.value,
+    } as Expense;
 
-  close() {
-    //this.dialog.close();
-    window.location.reload();
+    this.expenseService.updateExpense(this.expenseUpdateId, updatedExpense).subscribe({
+      next: data => {
+        console.log(data);
+        this.updated.next({});
+        this.bsModalRef.hide();
+      },
+      error: error => console.log(error)
+    });
+  }
 }
-}
+
