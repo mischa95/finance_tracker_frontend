@@ -12,11 +12,13 @@ import { ExpenseFormComponent } from './components/expense-form/expense-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateFormComponent } from './components/update-form/update-form.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 const routers: Routes = [
   { path: 'Categories', component: CategoryListComponent },
   { path: 'Expenses', component: ExpenseListComponent },
-  { path: '', redirectTo: 'Expenses', pathMatch: 'full' }
+  { path: 'Login', component: LoginFormComponent },
+  { path: '', redirectTo: 'Login', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -25,7 +27,8 @@ const routers: Routes = [
     ExpenseListComponent,
     CategoryListComponent,
     ExpenseFormComponent,
-    UpdateFormComponent
+    UpdateFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

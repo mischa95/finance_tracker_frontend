@@ -18,7 +18,7 @@
             <tr *ngFor="let expense of expenses">
                 <td>{{expense.description}}</td>
                 <td>{{expense.price}} {{expense.currency}}</td>
-                <td>{{expense.category?.categoryName}}</td>
+                <td>{{expense.category.categoryName}}</td>
                 <td>{{expense.date}}</td>
                 <td>
                     <button (click)="openUpdateExpenseModal(expense.id)">
