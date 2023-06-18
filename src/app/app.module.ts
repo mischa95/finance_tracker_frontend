@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ExpenseListComponent } from './components/expense-list/expense-list.component';
 import { RouterModule, Routes } from "@angular/router";
 import { CategoryListComponent } from './components/category-list/category-list.component';
@@ -12,7 +12,10 @@ import { ExpenseFormComponent } from './components/expense-form/expense-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateFormComponent } from './components/update-form/update-form.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { HttpUrlInterceptor } from './interceptors/http-url.interceptor';
+import { BasicAuthInterceptor } from './interceptors/basic-auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 const routers: Routes = [
   { path: 'Categories', component: CategoryListComponent },
@@ -40,7 +43,23 @@ const routers: Routes = [
     BrowserAnimationsModule,
     ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpUrlInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
