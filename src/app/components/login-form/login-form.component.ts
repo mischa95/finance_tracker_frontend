@@ -24,10 +24,12 @@ export class LoginFormComponent implements OnInit {
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     }, {});
+    this.authService.logout();
   }
 
   login() {
     if (this.form.valid) {
+      //show spinner
       this.authService.login(this.form.get('username')?.value, this.form.get('password')?.value)
         .subscribe(val => {
           console.log(val);

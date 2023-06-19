@@ -11,7 +11,6 @@ export class AuthService {
 
     public currentUser: Observable<any>;
     private currentUserSubject: BehaviorSubject<any>;
-    private getUrl: string = "http://localhost:8080";
 
     private readonly USER_KEY = 'currentUser';
 
@@ -34,9 +33,9 @@ export class AuthService {
     logout(reload: boolean = true): void {
         localStorage.removeItem(this.USER_KEY);
         this.currentUserSubject.next(null);
-        if (reload) {
-            location.reload();
-        }
+        // if (reload) {
+        //     location.reload();
+        // }
     }
 
     login(username: string, password: string): Observable<any> {
