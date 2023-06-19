@@ -8,23 +8,22 @@ import { Category } from '../models/category';
 })
 export class CategoryService {
 
-  private getUrl: string = "http://localhost:8080";
 
   constructor(private http: HttpClient) { }
 
   public getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.getUrl}/category/all`);
+    return this.http.get<Category[]>(`/category/all`);
   }
   public getCategoryById(categoryId: number): Observable<Category> {
-    return this.http.get<Category>(`${this.getUrl}/category/find/${categoryId}`);
+    return this.http.get<Category>(`/category/find/${categoryId}`);
   }
   public addCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(`${this.getUrl}/category/add`, category);
+    return this.http.post<Category>(`/category/add`, category);
   }
   public updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(`${this.getUrl}/category/update`, category);
+    return this.http.put<Category>(`/category/update`, category);
   }
   public deleteCategories(categoryId: number): Observable<void> {
-    return this.http.delete<void>(`${this.getUrl}/category/delete/${categoryId}`);
+    return this.http.delete<void>(`/category/delete/${categoryId}`);
   }
 }
