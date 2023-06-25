@@ -16,6 +16,10 @@
 		<label for="password">Password:</label> <input type="password"
 			class="form-control" id="password" name="password" [(ngModel)]="user.password"/>
 	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<div class="text-center">
+		<button type="submit" class="btn btn-primary">Sign In</button>
+		<p>Not a member? <a (click)="openRegisterFormModal()">Register</a></p>
+	</div>
+	<!-- <button type="submit" class="btn btn-primary">Sign In</button> -->
 </form>
 

@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Registration</h4>
+    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+     <div class='form-group'>
+          <label for="first_name">First name</label>
+          <input id="first_name" name="first_name" formControlName="firstName" class='form-control' autocomplete="off"
+          type="text" required>
+      </div>
+      <div class='form-group'>
+          <label for="last_name">Last name</label>
+          <input id="last_name" name="last_name" formControlName="lastName" class='form-control' autocomplete="off"
+          type="text" required>
+      </div>
+      <div class='form-group'>
+        <label for="username">Username</label>
+        <input id="username" name="username" formControlName="username" class='form-control' autocomplete="off"
+          type="text" required>
+      </div>
+      <div class='form-group'>
+        <label for="password">Password</label>
+        <input id="password" name="password" formControlName="password" class='form-control'  type="password" required>
+      </div>
+      <div class='form-group'>
+        <label for="email_address">Email address</label>
+        <input id="email_address" name="email_address" formControlName="emailAddress" class='form-control' autocomplete="off"
+          type="email" required>
+      </div>
+      <div class='form-group'>
+        <label for="birth_date">Birth date</label>
+        <input id="birth_date" name="birth_date" formControlName="birthDate" class='form-control'  type ="date" required>
+      </div> 
+      <div class='form-group'>
+        <label for="sex">Sex</label>
+        <select id="sex" name="sex" formControlName="sex" class='form-control'>
+          <option [value]="sex" *ngFor="let sex of sexes">
+            {{ sex }}
+          </option>
+        </select>
+      </div>
+      <button style="margin-left: 8px;" type="submit">Submit</button>
+    </form>
+  </div>

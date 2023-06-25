@@ -15,5 +15,10 @@ export class LoginService {
 
   loginUser(user: User):Observable<object> {
     return this.http.post(`${this.getUrl}/user/login`, user);
-    }
+  }
+
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.getUrl}/user/add`, user);
+  }
+
 }

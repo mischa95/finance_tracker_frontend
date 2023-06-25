@@ -12,7 +12,8 @@ import { ExpenseFormComponent } from './components/expense-form/expense-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateFormComponent } from './components/update-form/update-form.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 const routers: Routes = [
   { path: 'Categories', component: CategoryListComponent },
@@ -28,7 +29,8 @@ const routers: Routes = [
     CategoryListComponent,
     ExpenseFormComponent,
     UpdateFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,
