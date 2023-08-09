@@ -1,5 +1,4 @@
-
-  <div class="app" style="display: flex; height: 100vh; overflow:scroll initial">
+<div class="app" style="display: flex; height: 100vh; overflow:scroll initial">
     <CDBSidebar textColor="#ffffff" backgroundColor="#333333">
         <CDBSidebarHeader [prefix]="icon" >
             <ng-template #icon>
@@ -38,34 +37,32 @@
         </div>
     </CDBSidebar>
     <div class="container">
-        <button class="addButton btn btn-dark" (click)="openCreateExpenseModal()">Add Expense</button>
-       
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th>Akcje</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let expense of expenses">
-                    <td>{{expense.description}}</td>
-                    <td>{{expense.price}} {{expense.currency}}</td>
-                    <td>{{expense.category.categoryName}}</td>
-                    <td>{{expense.date}}</td>
-                    <td>
-                        <button (click)="openUpdateExpenseModal(expense.id)">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button (click)="deleteExpense(expense.id)" style="margin-left: 10px">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <h4 class="modal-title pull-left">User Information</h4>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class='form-group'>
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName" formControlName="firstName" class='form-control' autocomplete="off"
+              type="text" required>
+          </div>
+      
+          <div class='form-group'>
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" formControlName="lastName" class='form-control' autocomplete="off"
+            type="text" required>
+          </div>
+          
+          <div class='form-group'>
+            <label for="email">Email Address</label>
+            <input id="email" name="email" formControlName="email" class='form-control' autocomplete="off"
+              type="email" required>
+          </div>
+          <div class='form-group'>
+            <label for="date">Birth Date</label>
+            <input id="date" name="date" formControlName="date" class='form-control'  type ="date" required>
+          </div> 
+      
+          <button class="btn btn-dark" style="margin-left: 8px;" type="submit">Update</button>
+        </form>
     </div>
 </div>

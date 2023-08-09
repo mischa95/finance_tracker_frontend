@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ExpenseFormComponent } from '../expense-form/expense-form.component';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -16,14 +17,14 @@ export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = [];
   expenseId:number
 
-  constructor(private expenseService: ExpenseService, private router: Router, private modalService: BsModalService) { }
+  constructor(private expenseService: ExpenseService, private authService: AuthService, private router: Router, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listExpenses();
   }
 
   listExpenses() {
-    this.expenseService.getExpenses().subscribe(
+    this.expenseService.getExpensesForCurrentUser().subscribe(
       (data: any) => this.expenses = data
     )
   }
@@ -63,5 +64,9 @@ export class ExpenseListComponent implements OnInit {
     modalRef?.content?.expenseCreated.subscribe(() => {
       this.listExpenses();
     });
+  }
+
+  logout(){
+    this.authService.logout(true);
   }
 }

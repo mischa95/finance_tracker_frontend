@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { User } from "./user";
 
 export class Expense {
     id: number;
@@ -7,4 +8,5 @@ export class Expense {
     description: string;
     category: Category;
     date: Date;
+    user:User;
 }

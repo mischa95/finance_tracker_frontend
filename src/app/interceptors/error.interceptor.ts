@@ -18,7 +18,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 401) {
                 const shouldReload = !err.url || !err.url.includes('/auth/login');
-                this.authService.logout(shouldReload);
+                // this.authService.logout(shouldReload);
+                //TODO redirect to login page
             }
             // this.spinnerService.hide();  // TODO
 

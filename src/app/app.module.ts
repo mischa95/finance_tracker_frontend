@@ -16,11 +16,20 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { HttpUrlInterceptor } from './interceptors/http-url.interceptor';
 import { BasicAuthInterceptor } from './interceptors/basic-auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SidebarModule } from 'ng-cdbangular';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { PolarAreaChartComponent } from './components/polar-area-chart/polar-area-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 
 const routers: Routes = [
   { path: 'Categories', component: CategoryListComponent },
   { path: 'Expenses', component: ExpenseListComponent },
+  { path: 'Statistics', component: StatisticsComponent },
   { path: 'Login', component: LoginFormComponent },
+  { path: 'Profile', component: ProfileInfoComponent },
   { path: '', redirectTo: 'Login', pathMatch: 'full' }
 ];
 
@@ -31,17 +40,24 @@ const routers: Routes = [
     CategoryListComponent,
     ExpenseFormComponent,
     UpdateFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    RegisterFormComponent,
+    StatisticsComponent,
+    PolarAreaChartComponent,
+    ProfileInfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    SidebarModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routers),
     BrowserAnimationsModule,
     ModalModule.forRoot(),
+    NgxSpinnerModule,
+    NgChartsModule
   ],
   providers: [
     {
@@ -62,4 +78,5 @@ const routers: Routes = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

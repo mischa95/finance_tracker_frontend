@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import { User } from '../models/user';
+import { Router } from '@angular/router';
 // import {UserDto} from '../dto/user/user.dto';
 
 @Injectable({
@@ -14,7 +16,9 @@ export class AuthService {
 
     private readonly USER_KEY = 'currentUser';
 
+
     constructor(
+        private router: Router,
         private http: HttpClient
     ) {
         const user = localStorage.getItem(this.USER_KEY);
@@ -33,9 +37,10 @@ export class AuthService {
     logout(reload: boolean = true): void {
         localStorage.removeItem(this.USER_KEY);
         this.currentUserSubject.next(null);
-        // if (reload) {
-        //     location.reload();
-        // }
+        if (reload) {
+            this.router.navigateByUrl('/Login');
+           // location.reload();
+        }
     }
 
     login(username: string, password: string): Observable<any> {
@@ -51,4 +56,12 @@ export class AuthService {
                 return user;
             }));
     }
+
+    addUser(user: User): Observable<User> {
+        return this.http.post<User>(`/auth/add`, user);
+      }
+
+    getUserById(userId: number): Observable<User> {
+        return this.http.get<User>(`/auth/find/${userId}`);
+      }
 }

@@ -10,11 +10,14 @@ export class ExpenseService {
 
   constructor(private http: HttpClient) { }
 
-  public getExpenses(): Observable<Expense[]> {
+  public getExpensesByAccountId(): Observable<Expense[]> {
     return this.http.get<Expense[]>(`/expense/all`);
   }
   public getExpenseById(expenseId: number): Observable<Expense> {
     return this.http.get<Expense>(`/expense/findexbyid/${expenseId}`);
+  }
+  public getExpensesForCurrentUser(): Observable<Expense[]> {
+    return this.http.get<Expense[]>(`/expense/findbyuser`);
   }
   public getExpensesByCategory(categoryId: number): Observable<Expense[]> {
     return this.http.get<Expense[]>(`/expense/find/${categoryId}`);
@@ -27,6 +30,9 @@ export class ExpenseService {
   }
   public deleteExpenses(expenseId: number): Observable<void> {
     return this.http.delete<void>(`/expense/delete/${expenseId}`);
+  }
+  public getCategoryPercentage(categoryId: number): Observable<number>{
+    return this.http.get<number>(`/expense/getpercentage/${categoryId}`);
   }
   public sumAllExpenses(): Observable<number> {
     return this.http.get<number>(`/expense/sumall`);

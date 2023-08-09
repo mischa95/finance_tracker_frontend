@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ export class AppComponent implements OnInit{
     setTheme('bs5');
   }
   
-  ngOnInit(): void{}
+  ngOnInit(): void{
+    
+  }
 
 }
