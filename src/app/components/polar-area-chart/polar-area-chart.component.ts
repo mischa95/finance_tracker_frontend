@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ChartData, ChartEvent, ChartType } from 'chart.js';
-import { Observable } from 'rxjs';
-import { Category } from 'src/app/models/category';
+import { CategoryDTO } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 
@@ -12,14 +11,14 @@ import { ExpenseService } from 'src/app/services/expense.service';
 })
 export class PolarAreaChartComponent {
 
-  categories: Category[] = [];
+  categories: CategoryDTO[] = [];
   percentages: number[] = [];
   public polarAreaChartData: ChartData<'polarArea'>
   
   constructor(private expenseService: ExpenseService, private categoryService: CategoryService) {}
 
   ngOnInit() {
-    
+    // TODO nie wysyłać requestow w pętli -> zrobić endpointa ktory przyjmuje liste categoryId i zwraca liste
     for (let i = 1; i <= this.polarAreaChartLabels.length; i++){
       this.expenseService.getCategoryPercentage(i).subscribe(
         (data) => {

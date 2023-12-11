@@ -5,12 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ExpenseListComponent } from './components/expense-list/expense-list.component';
-import { RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from '@angular/router';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExpenseFormComponent } from './components/expense-form/expense-form.component';
+import { CreateExpenseFormComponent } from './components/expense-create-form/expense-create-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UpdateFormComponent } from './components/update-form/update-form.component';
+import { UpdateExpenseFormComponent } from './components/expense-update-form/expense-update-form.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HttpUrlInterceptor } from './interceptors/http-url.interceptor';
@@ -23,14 +23,16 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { PolarAreaChartComponent } from './components/polar-area-chart/polar-area-chart.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const routers: Routes = [
-  { path: 'Categories', component: CategoryListComponent },
-  { path: 'Expenses', component: ExpenseListComponent },
-  { path: 'Statistics', component: StatisticsComponent },
-  { path: 'Login', component: LoginFormComponent },
-  { path: 'Profile', component: ProfileInfoComponent },
-  { path: '', redirectTo: 'Login', pathMatch: 'full' }
+  { path: 'categories', component: CategoryListComponent },
+  { path: 'expenses', component: ExpenseListComponent },
+  { path: 'statistics', component: StatisticsComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: 'profile', component: ProfileInfoComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -38,13 +40,15 @@ const routers: Routes = [
     AppComponent,
     ExpenseListComponent,
     CategoryListComponent,
-    ExpenseFormComponent,
-    UpdateFormComponent,
+    CreateExpenseFormComponent,
+    UpdateExpenseFormComponent,
     LoginFormComponent,
     RegisterFormComponent,
     StatisticsComponent,
     PolarAreaChartComponent,
-    ProfileInfoComponent
+    ProfileInfoComponent,
+    NavBarComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

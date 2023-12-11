@@ -34,7 +34,8 @@
     "ngx-spinner": "^15.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.12.0",
+    "font-awesome": "4.6.3" 
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.1.6",

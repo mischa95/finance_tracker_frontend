@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { User } from '../models/user';
+import { UserDTO } from '../models/user';
 import { Router } from '@angular/router';
-// import {UserDto} from '../dto/user/user.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -38,8 +37,7 @@ export class AuthService {
         localStorage.removeItem(this.USER_KEY);
         this.currentUserSubject.next(null);
         if (reload) {
-            this.router.navigateByUrl('/Login');
-           // location.reload();
+            this.router.navigateByUrl('/login');
         }
     }
 
@@ -57,11 +55,11 @@ export class AuthService {
             }));
     }
 
-    addUser(user: User): Observable<User> {
-        return this.http.post<User>(`/auth/add`, user);
+    addUser(user: UserDTO): Observable<UserDTO> {
+        return this.http.post<UserDTO>(`/auth/users`, user);
       }
 
-    getUserById(userId: number): Observable<User> {
-        return this.http.get<User>(`/auth/find/${userId}`);
+    getUser(): Observable<UserDTO> {
+        return this.http.get<UserDTO>(`/auth/data`);
       }
 }

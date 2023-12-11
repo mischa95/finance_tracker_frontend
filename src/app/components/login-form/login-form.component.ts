@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../models/user';
+import { UserDTO } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { RegisterFormComponent } from '../register-form/register-form.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-login-form',
@@ -14,7 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginFormComponent implements OnInit {
 
-  user: User = new User();
+  user: UserDTO = new UserDTO();
   form: FormGroup;
   
   constructor(
@@ -29,7 +30,6 @@ export class LoginFormComponent implements OnInit {
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     }, {});
-    this.authService.logout();
   }
 
   login() {
@@ -39,7 +39,7 @@ export class LoginFormComponent implements OnInit {
         .subscribe(val => {
           console.log(val);
           this.spinner.hide();
-          this.router.navigateByUrl('/Expenses');
+          this.router.navigateByUrl('/expenses');
         })
     } else {
       alert('Invalid form!');

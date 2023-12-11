@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from 'src/app/models/category';
+import { CategoryDTO } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
-import { Expense } from 'src/app/models/expense';
+import { ExpenseDTO } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { UserDTO } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-expense-form',
-  templateUrl: './expense-form.component.html',
-  styleUrls: ['./expense-form.component.css']
+  templateUrl: './expense-create-form.component.html',
+  styleUrls: ['./expense-create-form.component.css']
 })
-export class ExpenseFormComponent implements OnInit {
+export class CreateExpenseFormComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
     private expenseService: ExpenseService,
+    private authService: AuthService,
     public bsModalRef: BsModalRef
   ) { }
 
-  categories: Category[] = [];
+  categories: CategoryDTO[] = [];
   expenseForm: FormGroup;
   expenseCreated: Subject<any> = new Subject();
 
   categoryId:number;
-  category:Category; 
+  category:CategoryDTO; 
+  user:UserDTO; 
 
   ngOnInit(): void {
 
@@ -36,7 +40,8 @@ export class ExpenseFormComponent implements OnInit {
       price: new FormControl('', Validators.required),
       currency: new FormControl('', Validators.required),
       category: new FormControl('', Validators.nullValidator),
-      date: new FormControl('', Validators.required)
+      date: new FormControl('', Validators.required),
+      user: new FormControl('', Validators.nullValidator)
     }, {});
   }
 
@@ -60,7 +65,7 @@ export class ExpenseFormComponent implements OnInit {
     if (this.expenseForm.valid) {
       this.saveExpense();
     } else {
-      // show alert
+      // TODO show alert
     }
   }
 
@@ -71,7 +76,7 @@ export class ExpenseFormComponent implements OnInit {
       currency: this.expenseForm.get('currency')?.value,
       category: this.category,
       date: this.expenseForm.get('date')?.value,
-    } as Expense;
+    } as ExpenseDTO;
 
     this.expenseService.addExpense(newExpense).subscribe({
       next: data => {
@@ -82,5 +87,4 @@ export class ExpenseFormComponent implements OnInit {
       error: error => console.log(error)
     });
   }
-
 }

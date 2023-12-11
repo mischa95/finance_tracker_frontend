@@ -8,31 +8,31 @@
   <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
     <div class='form-group'>
       <label for="description">Description</label>
-      <input id="description" name="description" formControlName="description" class='form-control' autocomplete="off"
+      <input id="description" name="description" formControlName="description" class="form-control" autocomplete="off"
         type="text" required>
     </div>
 
-    <div class='form-group'>
+    <div class="form-group">
       <label for="price">Price</label>
-      <input id="price" name="price" formControlName="price" class='form-control'  type="number" min="0">
+      <input id="price" name="price" formControlName="price" class="form-control"  type="number" min="0">
     </div>
     
-    <div class='form-group'>
+    <div class="form-group">
       <label for="currency">Currency</label>
-      <input id="currency" name="currency" formControlName="currency" class='form-control' autocomplete="off"
+      <input id="currency" name="currency" formControlName="currency" class="form-control" autocomplete="off"
         type="text" required>
     </div>
-    <div class='form-group'>
+    <div class="form-group">
       <label for="category">Category</label>
-      <select id="category" name="category" (change)="changeCategory($event)" formControlName="category" class='form-control'>
+      <select id="category" name="category" (change)="changeCategory($event)" formControlName="category" class="form-control">
         <option [value]="category.id" *ngFor="let category of categories">
           {{ category.categoryName }}
         </option>
       </select>
     </div>
-    <div class='form-group'>
+    <div class="form-group">
       <label for="date">Choose a date</label>
-      <input id="date" name="date" formControlName="date" class='form-control'  type ="date" required>
+      <input id="date" name="date" formControlName="date" class="form-control"  type ="date" required>
     </div> 
 
     <button class="btn btn-dark" style="margin-left: 8px;" type="submit">Submit</button>

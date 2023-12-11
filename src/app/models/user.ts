@@ -1,8 +1,8 @@
-export class User {
+export class UserDTO {
     id:number;
     username: string;
     password: string;
-    emailAddress:string;
+    email:string;
     firstName:string;
     lastName:string;
     birthDate:Date;

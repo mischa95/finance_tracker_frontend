@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { PolarAreaChartComponent } from '../polar-area-chart/polar-area-chart.component';
-
 
 @Component({
   selector: 'app-statistics',
@@ -10,13 +7,8 @@ import { PolarAreaChartComponent } from '../polar-area-chart/polar-area-chart.co
 })
 export class StatisticsComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    
-  }
-
-  logout(){
-    this.authService.logout(true);
   }
 }

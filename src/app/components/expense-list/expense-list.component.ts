@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Expense } from 'src/app/models/expense';
+import { ExpenseDTO } from 'src/app/models/expense';
 import { ExpenseService } from 'src/app/services/expense.service';
-import { Router } from '@angular/router';
-import { ExpenseFormComponent } from '../expense-form/expense-form.component';
-import { UpdateFormComponent } from '../update-form/update-form.component';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { CreateExpenseFormComponent } from '../expense-create-form/expense-create-form.component';
+import { UpdateExpenseFormComponent } from '../expense-update-form/expense-update-form.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -14,10 +14,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent implements OnInit {
-  expenses: Expense[] = [];
-  expenseId:number
+  expenses: ExpenseDTO[] = [];
+  expenseId: number
+  modalRef: BsModalRef;
 
-  constructor(private expenseService: ExpenseService, private authService: AuthService, private router: Router, private modalService: BsModalService) { }
+  constructor(private expenseService: ExpenseService, private authService: AuthService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.listExpenses();
@@ -30,43 +31,47 @@ export class ExpenseListComponent implements OnInit {
   }
 
   deleteExpense(id: number) {
-    this.expenseService.deleteExpenses(id).subscribe((data: any) => {
-      console.log(data);
-      this.listExpenses();
-    })
+    
+    this.modalRef = this.modalService.show(ConfirmationDialogComponent, {
+      initialState: {
+        title: 'Delete',
+        text: 'Are you sure you want to delete this expense?'
+      },
+      class: 'modal-md',
+      animated: false
+    });
+    
+    this.modalRef.content.onclose.subscribe((result: any) => {
+
+      if(result){
+        this.expenseService.deleteExpenses(id).subscribe((data: any) => {
+          console.log(data);
+          this.listExpenses();
+        })
+      }
+  })
   }
 
   openUpdateExpenseModal(expenseId: number) {
-    console.log('open update modal');
-    
-    const modalRef = this.modalService.show(UpdateFormComponent,  {
+    const modalRef = this.modalService.show(UpdateExpenseFormComponent, {
       class: 'modal-md',
       animated: false,
       initialState: {
         expenseUpdateId: expenseId
       }
-
     });
-
     modalRef?.content?.updated.subscribe(() => {
       this.listExpenses();
-      
     });
   }
 
   openCreateExpenseModal() {
-    console.log('open create modal');
-    const modalRef = this.modalService.show(ExpenseFormComponent, {
+    const modalRef = this.modalService.show(CreateExpenseFormComponent, {
       class: 'modal-md',
       animated: false
     });
-
     modalRef?.content?.expenseCreated.subscribe(() => {
       this.listExpenses();
     });
-  }
-
-  logout(){
-    this.authService.logout(true);
   }
 }

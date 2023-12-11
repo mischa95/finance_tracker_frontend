@@ -1,0 +1,35 @@
+<div class="sidebar-slider" [class.sidebar-slide-in]="sidebarShow">
+    <div class="sidebar-close" (click)="sidebarShowMethod()"><i class="fas fa-bars"></i></div>
+    <div class="sidebar-content">
+      <div class="sidebar-title">
+        <span class="title-container">
+          <span class="title" *ngIf="sidebarShow" style="font-size:25px">Finance Tracker</span>
+        </span>
+      </div>
+      
+      <div class="sidebar-item" (click)="goToDashboard()">
+        <span class="icon-container" [class.closed-sidebar]="!sidebarShow">
+          <span class="icon"><i class="fas fa-table"></i></span>
+        </span>
+        <span *ngIf="sidebarShow">Dashboard</span>
+      </div>
+      <div class="sidebar-item" (click)="goToStatistics()">
+        <span class="icon-container" [class.closed-sidebar]="!sidebarShow">
+          <span class="icon"><i class="fas fa-chart-line"></i></span>
+        </span>
+        <span *ngIf="sidebarShow">Statistics</span>
+      </div>
+      <div class="sidebar-item" (click)="goToProfile()">
+        <span class="icon-container" [class.closed-sidebar]="!sidebarShow">
+          <span class="icon"><i class="fas fa-user"></i></span>
+        </span>
+        <span *ngIf="sidebarShow">Profile</span>
+      </div>
+      <div class="sidebar-item" (click)="logout()">
+        <span class="icon-container" [class.closed-sidebar]="!sidebarShow">
+          <span class="icon"><i class="fas fa-door-open"></i></span>
+        </span>
+        <span *ngIf="sidebarShow">Log out</span>
+      </div>
+    </div>
+  </div>

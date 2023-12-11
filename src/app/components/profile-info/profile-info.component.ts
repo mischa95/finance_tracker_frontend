@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user';
+import { UserDTO } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-profile-info',
@@ -11,14 +12,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ProfileInfoComponent {
 
   userForm: FormGroup;
-  user: User;
+  user: UserDTO;
   userUpdateId: number;
   errorMessage: string;
+  navbarOpen: boolean= false;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    
     this.getUser(this.userUpdateId);
 
     this.userForm = new FormGroup({
@@ -30,14 +31,14 @@ export class ProfileInfoComponent {
   }
 
   getUser(id: any | null): void {
-    this.authService.getUserById(id)
+    this.authService.getUser()
       .subscribe({
-          next: (user: User) => this.displayUser(user),
+          next: (user: UserDTO) => this.displayUser(user),
           error: err => this.errorMessage = err
       });
   }
 
-  displayUser(user: User): void{
+  displayUser(user: UserDTO): void{
     if(this.userForm){
       this.userForm.reset();
     }
@@ -46,7 +47,7 @@ export class ProfileInfoComponent {
     this.userForm.patchValue({
       firstName: this.user.firstName,
       lastName: this.user.lastName,
-      email: this.user.emailAddress,
+      email: this.user.email,
       date: this.user.birthDate
     });
   }
@@ -58,9 +59,5 @@ export class ProfileInfoComponent {
     // } else {
     //   // show alert
     // }
-  }
-
-  logout(){
-    this.authService.logout(true);
   }
 }

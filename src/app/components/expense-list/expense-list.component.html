@@ -1,42 +1,6 @@
 
-  <div class="app" style="display: flex; height: 100vh; overflow:scroll initial">
-    <CDBSidebar textColor="#ffffff" backgroundColor="#333333">
-        <CDBSidebarHeader [prefix]="icon" >
-            <ng-template #icon>
-                <i class="fa fa-bars fa-large"></i>
-            </ng-template>
+<div class="app" style="display: flex; height: 100vh; overflow:scroll initial">
 
-            Finance Tracker
-        </CDBSidebarHeader>
-
-        <CDBSidebarContent>
-            <CDBSidebarMenu class="sidebar-content">
-                <CDBSidebarMenuItem link='/Expenses' icon="columns" >
-                    Dashboard
-                </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem link='/Planning' icon=table >
-                    Budget Planning
-                </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem link='/Statistics' icon="table" >
-                    Statistics
-                </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem link='/Profile' icon="user" >
-                    Profile
-                </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem class="logout" (click)="logout()" icon="user" >
-                    Log out
-                </CDBSidebarMenuItem>
-            </CDBSidebarMenu>
-        </CDBSidebarContent>
-        <div class="mt-auto">
-
-            <CDBSidebarFooter style="text-align: center; margin-top: auto;">
-                <div class="sidebar-btn-wrapper" style="padding: 20px 5px">
-                    Finance Tracker
-                </div>
-            </CDBSidebarFooter>
-        </div>
-    </CDBSidebar>
     <div class="container">
         <button class="addButton btn btn-dark" (click)="openCreateExpenseModal()">Add Expense</button>
        
@@ -47,13 +11,13 @@
                     <th>Price</th>
                     <th>Category</th>
                     <th>Date</th>
-                    <th>Akcje</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let expense of expenses">
                     <td>{{expense.description}}</td>
-                    <td>{{expense.price}} {{expense.currency}}</td>
+                    <td>{{expense.price.toFixed(2)}} {{expense.currency}}</td>
                     <td>{{expense.category.categoryName}}</td>
                     <td>{{expense.date}}</td>
                     <td>

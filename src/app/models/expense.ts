@@ -1,12 +1,12 @@
-import { Category } from "./category";
-import { User } from "./user";
+import { CategoryDTO } from "./category";
+import { UserDTO } from "./user";
 
-export class Expense {
+export class ExpenseDTO {
     id: number;
     price : number;
     currency : string;
     description: string;
-    category: Category;
+    category: CategoryDTO;
     date: Date;
-    user:User;
+    user:UserDTO;
 }
